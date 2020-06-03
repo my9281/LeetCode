@@ -183,6 +183,16 @@ namespace Leetcode.Solutions
             if (!int.TryParse(str2.Trim(' '), out x)) return ch[0] == '-' ? -2147483648 : 2147483647;
             return x;
         }
-
+        //test9
+        public static bool IsPalindrome(int x)
+        {
+            if (x < 0) return false;
+            var chr = x.ToString().ToCharArray();
+            System.Array.Reverse(chr);
+            var str = new string(chr);
+            int c;
+            if (int.TryParse(str, out c) && x == c) return true;
+            return false;
+        }
     }
 }
