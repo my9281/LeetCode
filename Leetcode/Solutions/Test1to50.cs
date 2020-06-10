@@ -276,6 +276,54 @@ namespace Leetcode.Solutions
             }
             return commonstr;
         }
+        //test15
+        public static IList<IList<int>> ThreeSum(int[] nums)
+        {
+            var re = new List<IList<int>>();
+            var li = nums.ToList();
+            li.Sort();
+            for (int i = 0; i < li.Count; i++)
+            {
+                if (i >= li.Count - 2) break;
+                var jump = 0;
+                if (li[i] == li[i + 1]) jump += 1;
+                if (li[i] == li[i + 2])
+                {
+                    if (li[i] + li[i + 1] + li[i + 1] == 0 && (re.FirstOrDefault(ex => ex[0] == li[i] && ex[1] == li[i + 1]) == null)) re.Add(new List<int>() { li[i], li[i + 1], li[i + 2] });
+                    continue;
+                }
+                for (int j = i + 1; j < li.Count; j++)
+                {
+                    if (j >= li.Count - 1) break;
+                    if (li[j] == li[j + 1])
+                    {
+                        if (li[i] + li[j] + li[j + 1] == 0 && (re.FirstOrDefault(ex => ex[0] == li[i] && ex[1] == li[j]) == null)) re.Add(new List<int>() { li[i], li[j], li[j + 1] });
+                        continue;
+                    }
+                    var right = li.Count - 1;
+                    var left = j + 1;
+                    var isok = false;
+                    while (true)
+                    {
+                        var k = (left + right) / 2;
+                        if (li[i] + li[j] + li[k] == 0)
+                        {
+                            re.Add(new List<int>() { li[i], li[j], li[k] });
+                            isok = true;
+                            break;
+                        }
+                        else if (left == k || right == k) break;
+                        else if (li[i] + li[j] + li[k] > 0) right = k;
+                        else if (li[i] + li[j] + li[k] < 0) left = k;
+                    }
+                    if (isok) continue;
+                    if (li[i] + li[j] + li[left] == 0) re.Add(new List<int>() { li[i], li[j], li[left] });
+                    else if (li[i] + li[j] + li[right] == 0) re.Add(new List<int>() { li[i], li[j], li[right] });
+                }
+                i += jump;
+            }
+            return re;
+        }
         //test35
         public int SearchInsert(int[] nums, int target)
         {
