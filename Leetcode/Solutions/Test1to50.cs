@@ -361,9 +361,9 @@ namespace Leetcode.Solutions
                         }
                         leftsum = nums[i] + nums[j] + nums[left];
                         rightsum = nums[i] + nums[j] + nums[right];
-                        miniminu = Math.Abs(leftsum - target) > Math.Abs(rightsum - target) ? rightsum : leftsum;
+                        miniminu = System.Math.Abs(leftsum - target) > System.Math.Abs(rightsum - target) ? rightsum : leftsum;
                     }
-                    re = Math.Abs(re - target) > Math.Abs(miniminu - target) ? miniminu : re;
+                    re = System.Math.Abs(re - target) > System.Math.Abs(miniminu - target) ? miniminu : re;
                 }
             }
             return re;
