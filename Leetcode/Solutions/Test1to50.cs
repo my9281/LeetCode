@@ -157,7 +157,7 @@ namespace Leetcode.Solutions
         public static int Reverse(int x)
         {
             if (x <= -2147483648) return 0;
-            var k = x < 0; 
+            var k = x < 0;
             var str = System.Math.Abs(x).ToString().ToCharArray();
             System.Array.Reverse(str);
             if (!int.TryParse(new string(str), out x)) return 0;
@@ -193,6 +193,47 @@ namespace Leetcode.Solutions
             int c;
             if (int.TryParse(str, out c) && x == c) return true;
             return false;
+        }
+
+        //test11
+        public static int MaxArea(int[] height)
+        {
+            var p = 0;
+            for (int i = 0; i < height.Length; i++) 
+                for (int j = i + 1; j < height.Length; j++) 
+                    p = p > (height[j] > height[i] ? height[i] : height[j]) * (j - i) ? p : (height[j] > height[i] ? height[i] : height[j]) * (j - i);      
+            return p;
+        }
+        //test12
+        public static string IntToRoman(int num)
+        {
+            string GS(int w, string str1, string str5, string str10)
+            {
+                var tempstr = "";
+                if (w <= 3)
+                    for (int i = 0; i < w; i++)
+                        tempstr += str1;
+                else if (w == 4)
+                    tempstr += str1 + str5;
+                else if (w >= 5 && w < 9)
+                {
+                    tempstr += str5;
+                    for (int i = 0; i < w - 5; i++)
+                        tempstr += str1;
+                }
+                else if (w == 9)
+                    tempstr += str1 + str10;
+                return tempstr;
+            }
+            return GS(num / 1000 % 10, "M", "", "") + GS(num / 100 % 10, "C", "D", "M") + GS(num / 10 % 10, "X", "L", "C") + GS(num % 10, "I", "V", "X");
+        }
+
+        //test35
+        public int SearchInsert(int[] nums, int target)
+        {
+            for (int i = 0; i < nums.Length; i++)
+                if (nums[i] >= target) return i;
+            return nums.Length;
         }
     }
 }
