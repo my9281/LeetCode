@@ -227,7 +227,42 @@ namespace Leetcode.Solutions
             }
             return GS(num / 1000 % 10, "M", "", "") + GS(num / 100 % 10, "C", "D", "M") + GS(num / 10 % 10, "X", "L", "C") + GS(num % 10, "I", "V", "X");
         }
-
+        //test13
+        public static int RomanToInt(string s)
+        {
+            int sum = 0;
+            var ch = s.ToCharArray();
+            List<int> li = new List<int>();
+            for (int i = 0; i < ch.Length; i++)
+            {
+                int temp = 0;
+                switch (ch[i])
+                {
+                    case 'I': temp = 1; break;
+                    case 'V': temp = 5; break;
+                    case 'X': temp = 10; break;
+                    case 'L': temp = 50; break;
+                    case 'C': temp = 100; break;
+                    case 'D': temp = 500; break;
+                    case 'M': temp = 1000; break;
+                    default:
+                        break;
+                }
+                li.Add(temp);
+            }
+            for (int i = 0; i < li.Count; i++)
+            {
+                if (i + 1 >= li.Count || li[i + 1] <= li[i])
+                {
+                    sum += li[i];
+                }
+                else
+                {
+                    sum -= li[i];
+                }
+            }
+            return sum;
+        }
         //test35
         public int SearchInsert(int[] nums, int target)
         {
