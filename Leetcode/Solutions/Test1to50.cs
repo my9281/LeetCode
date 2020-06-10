@@ -263,6 +263,19 @@ namespace Leetcode.Solutions
             }
             return sum;
         }
+        //test14
+        public static string LongestCommonPrefix(string[] strs)
+        {
+            var commonstr = "";
+            if (strs.Length <= 0) return commonstr;
+            for (int i = 0; i < strs.First().Length; i++)
+            {
+                for (int j = 0; j < strs.Length; j++)
+                    if (strs[j].ToCharArray().Length <= i || !strs[j].ToCharArray()[i].Equals(strs.First().ToCharArray()[i])) return commonstr;
+                commonstr += strs.First().ToCharArray()[i].ToString();
+            }
+            return commonstr;
+        }
         //test35
         public int SearchInsert(int[] nums, int target)
         {
