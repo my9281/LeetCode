@@ -199,9 +199,9 @@ namespace Leetcode.Solutions
         public static int MaxArea(int[] height)
         {
             var p = 0;
-            for (int i = 0; i < height.Length; i++) 
-                for (int j = i + 1; j < height.Length; j++) 
-                    p = p > (height[j] > height[i] ? height[i] : height[j]) * (j - i) ? p : (height[j] > height[i] ? height[i] : height[j]) * (j - i);      
+            for (int i = 0; i < height.Length; i++)
+                for (int j = i + 1; j < height.Length; j++)
+                    p = p > (height[j] > height[i] ? height[i] : height[j]) * (j - i) ? p : (height[j] > height[i] ? height[i] : height[j]) * (j - i);
             return p;
         }
         //test12
@@ -321,6 +321,50 @@ namespace Leetcode.Solutions
                     else if (li[i] + li[j] + li[right] == 0) re.Add(new List<int>() { li[i], li[j], li[right] });
                 }
                 i += jump;
+            }
+            return re;
+        }
+        //test17
+        public static int ThreeSumClosest(int[] nums, int target)
+        {
+            var li = nums.ToList();
+            li.Sort();
+            nums = li.ToArray();
+            int re = nums[0] + nums[1] + nums[2];
+            for (int i = 0; i < nums.Length; i++)
+            {
+                for (int j = i + 1; j < nums.Length; j++)
+                {
+                    if (j + 1 == nums.Length) break;
+                    var left = j + 1;
+                    var right = nums.Length - 1;
+                    var leftsum = nums[i] + nums[j] + nums[left];
+                    var rightsum = nums[i] + nums[j] + nums[right];
+                    var miniminu = 0;
+                    if (leftsum > target)
+                    {
+                        miniminu = leftsum;
+                    }
+                    else if (rightsum < target)
+                    {
+                        miniminu = rightsum;
+                    }
+                    else
+                    {
+                        while (true)
+                        {
+                            var k = (left + right) / 2;
+                            if (nums[i] + nums[j] + nums[k] == target) return target;
+                            else if (left == k || right == k) break;
+                            if (nums[i] + nums[j] + nums[k] > target) right = k;
+                            if (nums[i] + nums[j] + nums[k] < target) left = k;
+                        }
+                        leftsum = nums[i] + nums[j] + nums[left];
+                        rightsum = nums[i] + nums[j] + nums[right];
+                        miniminu = Math.Abs(leftsum - target) > Math.Abs(rightsum - target) ? rightsum : leftsum;
+                    }
+                    re = Math.Abs(re - target) > Math.Abs(miniminu - target) ? miniminu : re;
+                }
             }
             return re;
         }
