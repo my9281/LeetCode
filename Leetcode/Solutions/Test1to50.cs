@@ -324,7 +324,7 @@ namespace Leetcode.Solutions
             }
             return re;
         }
-        //test17
+        //test16
         public static int ThreeSumClosest(int[] nums, int target)
         {
             var li = nums.ToList();
@@ -368,7 +368,7 @@ namespace Leetcode.Solutions
             }
             return re;
         }
-        //test18
+        //test17
         public static IList<string> LetterCombinations(string digits)
         {
             var li = new List<string>();
@@ -384,12 +384,46 @@ namespace Leetcode.Solutions
             GetdigitSigle(d, digits, li, "");
             return li;
         }
-        //test18 sup
+        //test17 sup
         static void GetdigitSigle(Dictionary<char, string> env, string digits, List<string> outer, string now)
         {
             if (string.IsNullOrEmpty(digits)) { outer.Add(now); return; }
             env[digits.ToCharArray().First()].ToCharArray().ToList().ForEach(ex => GetdigitSigle(env, new string(digits.ToCharArray().Skip(1).ToArray()), outer, now + ex.ToString()));
         }
+        //test19
+        public static ListNode RemoveNthFromEnd(ListNode head, int n, bool isstart = true)
+        {
+            if (head.next == null && n == 1) return null;
+            if (isstart)
+            {
+                var i = 1;
+                var now = head;
+                while (true)
+                {
+                    if (now.next == null)
+                    {
+                        break;
+                    }
+                    now = now.next;
+                    i += 1;
+                }
+                n = i - n;
+            }
+            if (n <= 0)
+            {
+                return head?.next;
+            }
+            if (n == 1)
+            {
+                head.next = head?.next?.next;
+            }
+            else
+            {
+                RemoveNthFromEnd(head.next, n - 1, false);
+            }
+            return head;
+        }
+
         //test35
         public int SearchInsert(int[] nums, int target)
         {
