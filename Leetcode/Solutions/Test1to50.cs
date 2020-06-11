@@ -423,7 +423,66 @@ namespace Leetcode.Solutions
             }
             return head;
         }
-
+        //test20
+        public static bool IsValid(string s)
+        {
+            if (s == "") return true;
+            List<string> staticSTA = new List<string>();
+            foreach (var item in s.ToCharArray())
+            {
+                switch (item.ToString())
+                {
+                    case "(":
+                    case "[":
+                    case "{":
+                        staticSTA.Add(item.ToString());
+                        break;
+                    case ")":
+                        {
+                            if (staticSTA.Count <= 0)
+                            {
+                                return false;
+                            }
+                            if (staticSTA.Last() == "(")
+                            {
+                                staticSTA.RemoveAt(staticSTA.Count - 1);
+                                break;
+                            }
+                        }
+                        return false;
+                    case "]":
+                        {
+                            if (staticSTA.Count <= 0)
+                            {
+                                return false;
+                            }
+                            if (staticSTA.Last() == "[")
+                            {
+                                staticSTA.RemoveAt(staticSTA.Count - 1);
+                                break;
+                            }
+                        }
+                        return false;
+                    case "}":
+                        {
+                            if (staticSTA.Count <= 0)
+                            {
+                                return false;
+                            }
+                            if (staticSTA.Last() == "{")
+                            {
+                                staticSTA.RemoveAt(staticSTA.Count - 1);
+                                break;
+                            }
+                        }
+                        return false;
+                    default:
+                        return false;
+                }
+            }
+            if (staticSTA.Count != 0) return false;
+            return true;
+        }
         //test35
         public int SearchInsert(int[] nums, int target)
         {
