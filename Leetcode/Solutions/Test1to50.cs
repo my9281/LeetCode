@@ -368,6 +368,28 @@ namespace Leetcode.Solutions
             }
             return re;
         }
+        //test18
+        public static IList<string> LetterCombinations(string digits)
+        {
+            var li = new List<string>();
+            Dictionary<char, string> d = new Dictionary<char, string>();
+            d.Add('2', "abc");
+            d.Add('3', "def");
+            d.Add('4', "ghi");
+            d.Add('5', "jkl");
+            d.Add('6', "mno");
+            d.Add('7', "pqrs");
+            d.Add('8', "tuv");
+            d.Add('9', "wxyz");
+            GetdigitSigle(d, digits, li, "");
+            return li;
+        }
+        //test18 sup
+        static void GetdigitSigle(Dictionary<char, string> env, string digits, List<string> outer, string now)
+        {
+            if (string.IsNullOrEmpty(digits)) { outer.Add(now); return; }
+            env[digits.ToCharArray().First()].ToCharArray().ToList().ForEach(ex => GetdigitSigle(env, new string(digits.ToCharArray().Skip(1).ToArray()), outer, now + ex.ToString()));
+        }
         //test35
         public int SearchInsert(int[] nums, int target)
         {
