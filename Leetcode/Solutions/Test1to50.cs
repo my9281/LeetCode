@@ -590,6 +590,28 @@ namespace Leetcode.Solutions
             }
             return first;
         }
+
+        //test26
+        public static int RemoveDuplicates(int[] nums)
+        {
+            var count = nums.Length;
+            for (int i = 0; i < count; i++)
+            {
+                for (int j = i + 1; j < count; j++)
+                {
+                    if (nums[i] == nums[j])
+                    {
+                        count -= 1;
+                        for (int k = j; k < count; k++)
+                        {
+                            nums[k] = nums[k + 1];
+                        }
+                        j--;
+                    }
+                }
+            }
+            return count;
+        }
         //test35
         public int SearchInsert(int[] nums, int target)
         {
