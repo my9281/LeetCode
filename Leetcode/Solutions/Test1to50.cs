@@ -483,6 +483,113 @@ namespace Leetcode.Solutions
             if (staticSTA.Count != 0) return false;
             return true;
         }
+        //test21
+        public static ListNode MergeTwoLists(ListNode l1, ListNode l2)
+        {
+            if (l1 == null)
+            {
+                return l2;
+            }
+            if (l2 == null)
+            {
+                return l1;
+            }
+            ListNode first = null;
+            ListNode now = null;
+            if (l1?.val <= l2?.val)
+            {
+                now = l1;
+                l1 = l1?.next;
+                now.next = null;
+            }
+            else
+            {
+                now = l2;
+                l2 = l2?.next;
+                now.next = null;
+            }
+            first = now;
+            while (true)
+            {
+                if (l1 == null)
+                {
+                    now.next = l2;
+                    break;
+                }
+                if (l2 == null)
+                {
+                    now.next = l1;
+                    break;
+                }
+                if (l1.val <= l2.val)
+                {
+                    now.next = l1;
+                    l1 = l1.next;
+                    now = now.next;
+                }
+                else
+                {
+                    now.next = l2;
+                    l2 = l2.next;
+                    now = now.next;
+                }
+            }
+            return first;
+        }
+        //test22
+        public static IList<string> GenerateParenthesis(int n)
+        {
+            if (n <= 0) return new List<string>();
+            if (n == 1) return new List<string>() { "()" };
+            var li = new List<string>();
+            GenerateParenthesisSup(li, n, n);
+            return li;
+        }
+        //test22 sup
+        private static void GenerateParenthesisSup(List<string> li, int n, int kyr, int kpl = 0, string str = "")
+        {
+            if (str.Length == n * 2 - 1)
+            {
+                if (kpl == 1 && kyr == 1) li.Add(str + ")");
+                return;
+            }
+            if (kpl > kyr || kpl < 0) return;
+            GenerateParenthesisSup(li, n, kyr, kpl + 1, str + "(");
+            GenerateParenthesisSup(li, n, kyr - 1, kpl - 1, str + ")");
+        }
+        //test23
+        public static ListNode MergeKLists(ListNode[] lists)
+        {
+            ListNode first = null;
+            ListNode last = null;
+            while (true)
+            {
+                int site = -1;
+                int? min = null;
+                for (int i = 0; i < lists.Length; i++)
+                {
+                    if (lists[i] == null)   continue; 
+                    if (min == null || min >= lists[i].val)
+                    {
+                        min = lists[i].val;
+                        site = i;
+                    }
+                }
+                if (site == -1) break; 
+                if (last == null)
+                {
+                    first = lists[site];
+                    last = lists[site];
+                }
+                else
+                {
+                    last.next = lists[site];
+                    last = last.next;
+                }
+                lists[site] = lists[site].next;
+            }
+            return first;
+        }
         //test35
         public int SearchInsert(int[] nums, int target)
         {
